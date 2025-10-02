@@ -1,6 +1,5 @@
 package com.thehairydog.tmtrutil.registry
 
-import com.thehairydog.tmtrutil.item.TmItem
 import net.minecraft.core.Registry
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.resources.ResourceLocation

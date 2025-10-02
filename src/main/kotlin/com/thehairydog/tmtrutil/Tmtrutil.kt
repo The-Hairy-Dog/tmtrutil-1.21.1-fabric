@@ -1,6 +1,7 @@
 package com.thehairydog.tmtrutil
 
 import com.thehairydog.tmtrutil.registry.ModCreativeTabs
+import com.thehairydog.tmtrutil.registry.ModEvents
 import com.thehairydog.tmtrutil.registry.ModItems
 import net.fabricmc.api.ModInitializer
 import org.slf4j.LoggerFactory

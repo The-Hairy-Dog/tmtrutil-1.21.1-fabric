@@ -1,3 +1,5 @@
+package com.thehairydog.tmtrutil.registry
+
 import com.cobblemon.mod.common.api.moves.BenchedMove
 import com.cobblemon.mod.common.api.moves.Move
 import com.cobblemon.mod.common.api.moves.MoveTemplate
