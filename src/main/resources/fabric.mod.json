@@ -31,7 +31,8 @@
 		"java": ">=21",
 		"fabric-api": "*",
 		"fabric-language-kotlin": "*",
-        "cobblemon": ">=1.6.1"
+        "cobblemon": ">=1.6.1",
+        "polymer": "0.9.18"
 	},
 	"suggests": {
 		"another-mod": "*"

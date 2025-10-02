@@ -33,7 +33,8 @@ dependencies {
     modImplementation "maven.modrinth:cobblemon:${project.cobblemon_version}"
 
     //Polymer
-    modImplementation include("eu.pb4:polymer-core:0.9.18+1.21.1")
+    modImplementation include("eu.pb4:polymer-core:${project.polymer_version}")
+    modImplementation ("eu.pb4:polymer-resource-pack:${project.polymer_version}")
 }
 
 processResources {

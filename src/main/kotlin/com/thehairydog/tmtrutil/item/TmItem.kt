@@ -1,16 +1,27 @@
 package com.thehairydog.tmtrutil.item
 
-import eu.pb4.polymer.core.api.item.PolymerItem
+import com.thehairydog.tmtrutil.registry.TMType
+import eu.pb4.polymer.core.api.item.SimplePolymerItem
+import eu.pb4.polymer.resourcepack.api.PolymerModelData
+import eu.pb4.polymer.resourcepack.api.PolymerResourcePackUtils
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerPlayer
-import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.Items
 
 class TmItem(
-    settings: Properties,
-    private val fallback: Item // e.g. PAPER, BOOK, MUSIC_DISC
-) : Item(settings), PolymerItem {
-    override fun getPolymerItem(stack: ItemStack, player: ServerPlayer?): Item {
-        // If client doesn’t load your resource pack, it will look like this item
-        return fallback
+    val tmName: String,
+    settings: Properties = Properties().stacksTo(1) // default
+) : SimplePolymerItem(settings, Items.PAPER) {
+
+    private val modelData: PolymerModelData = PolymerResourcePackUtils.requestModel(
+        Items.PAPER,
+        ResourceLocation.fromNamespaceAndPath("simpletms", "item/$tmName")
+    )
+
+    override fun getPolymerCustomModelData(stack: ItemStack, player: ServerPlayer?): Int {
+        return modelData.value()
     }
 }
+
+

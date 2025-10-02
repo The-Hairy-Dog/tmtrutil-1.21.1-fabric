@@ -16,6 +16,7 @@ object Tmtrutil : ModInitializer {
         logger.info("Initialised TMs & TRs")
 
         ModItems.registerAll()
+        ModEvents.register()
 
     }
 }
