@@ -55,11 +55,11 @@ class TmItem(
 
         // Type
         val typeColor = ColourUtil.typeColors[move.elementalType.name.lowercase()] ?: white
-        lore.add(bullet("Type", move.elementalType.name, typeColor))
+        lore.add(bullet("Type", move.elementalType.name.replaceFirstChar { it.titlecase() }, typeColor))
 
         // Category
         val catColor = ColourUtil.categoryColors[move.damageCategory.name.lowercase()] ?: white
-        lore.add(bullet("Category", move.damageCategory.name, catColor))
+        lore.add(bullet("Category", move.damageCategory.name.replaceFirstChar { it.titlecase() }, catColor))
 
         // Power
         val powerValue = if (move.power.toInt() <= 0) "-" else move.power.toInt().toString()
@@ -70,6 +70,7 @@ class TmItem(
         lore.add(bullet("Accuracy", accValue, ColourUtil.getAccuracyColor(move.accuracy.toInt())))
 
         return lore
+
     }
 
     override fun getPolymerItemStack(
