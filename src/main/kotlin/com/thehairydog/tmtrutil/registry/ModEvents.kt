@@ -36,7 +36,7 @@ object ModEvents {
         })
     }
 
-    private fun getPokemonPlayerIsTargeting(player: ServerPlayer, maxDistance: Double = 5.0): Pokemon? {
+    private fun getPokemonPlayerIsTargeting(player: ServerPlayer, maxDistance: Double = 3.0): Pokemon? {
         val eyePos: Vec3 = player.eyePosition
         val lookVec: Vec3 = player.lookAngle
         val endVec: Vec3 = eyePos.add(lookVec.scale(maxDistance))
@@ -69,21 +69,21 @@ object ModEvents {
         val moveTemplate = Moves.getByName(moveName)
 
         if (moveTemplate == null) {
-            player.sendSystemMessage(Component.literal("Move $moveName not found"))
+            player.sendSystemMessage(Component.translatable("Move $moveName not found. Report this to an admin."))
             return
         }
 
         // Check if Pokémon can learn the move via TM
         val learnSet: Learnset = pokemon.species.moves
         if (!learnSet.tmMoves.contains(moveTemplate)) {
-            player.sendSystemMessage(Component.literal("${pokemon.species.name} can't learn ${moveTemplate.displayName} via TM!"))
+            player.sendSystemMessage(Component.translatable("${pokemon.species.name} can't learn ${moveTemplate.name} via TM!"))
             return
         }
 
         // Teach the move
         pokemon.learnMoveSafely(moveTemplate)
 
-        player.sendSystemMessage(Component.literal("${pokemon.species.name} learned ${moveTemplate.displayName}!"))
+        player.sendSystemMessage(Component.translatable("${pokemon.species.name} learned ${moveTemplate.name}!"))
     }
 
     fun Pokemon.learnMoveSafely(template: MoveTemplate) {

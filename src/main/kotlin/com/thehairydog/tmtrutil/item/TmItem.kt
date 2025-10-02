@@ -1,6 +1,5 @@
 package com.thehairydog.tmtrutil.item
 
-import com.thehairydog.tmtrutil.registry.TMType
 import eu.pb4.polymer.core.api.item.SimplePolymerItem
 import eu.pb4.polymer.resourcepack.api.PolymerModelData
 import eu.pb4.polymer.resourcepack.api.PolymerResourcePackUtils

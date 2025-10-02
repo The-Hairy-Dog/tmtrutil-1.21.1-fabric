@@ -7,11 +7,9 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
 
 object ModItems {
-    // Example: register one TM
-    val TM_ABSORB = register("tm_absorb", TmItem("tm_absorb"))
 
     // Helper function
-    private fun register(name: String, item: Item): Item {
+    fun register(name: String, item: Item): Item {
         return Registry.register(
             BuiltInRegistries.ITEM,
             ResourceLocation.fromNamespaceAndPath("simpletms", name),
@@ -21,6 +19,8 @@ object ModItems {
 
     fun registerAll() {
         println("Registering TMs for simpletms")
-        TM_ABSORB
+
+        // Register all TMs from TMItems
+        TMItems.items.values.forEach { /* already registered via register() */ }
     }
 }
