@@ -83,19 +83,26 @@ object ModEvents {
         }
 
         // Teach the move
-        pokemon.learnMoveSafely(moveTemplate)
+        // Teach the move
+        if (pokemon.learnMoveSafely(moveTemplate)) {
+            player.sendSystemMessage(
+                Component.translatable("${pokemon.species.name} learned ${moveTemplate.name}!")
+            )
+        } else {
+            player.sendSystemMessage(
+                Component.translatable("${pokemon.species.name} already knows ${moveTemplate.name}!")
+            )
+        }
 
-        player.sendSystemMessage(Component.translatable("${pokemon.species.name} learned ${moveTemplate.name}!"))
     }
 
-    fun Pokemon.learnMoveSafely(template: MoveTemplate) {
+    fun Pokemon.learnMoveSafely(template: MoveTemplate): Boolean {
         // Already knows this move?
-        if (this.allAccessibleMoves.contains(template)) return
+        if (this.allAccessibleMoves.any { it.name == template.name }) return false
 
         // Create a new Move instance with full PP
         val newMove = Move(template, template.maxPp)
 
-        // Add to active moves if space exists, otherwise add to benched moves
         if (this.moveSet.hasSpace()) {
             this.moveSet.add(newMove)
         } else {
@@ -103,7 +110,8 @@ object ModEvents {
             this.benchedMoves.add(benchedMove)
         }
 
-        // Update MoveSet observables for syncing
         this.moveSet.update()
+        return true
     }
+
 }
