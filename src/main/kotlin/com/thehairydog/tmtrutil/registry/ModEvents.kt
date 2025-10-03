@@ -8,6 +8,7 @@ import com.cobblemon.mod.common.api.pokemon.moves.Learnset
 import com.cobblemon.mod.common.entity.pokemon.PokemonEntity
 import com.cobblemon.mod.common.pokemon.Pokemon
 import com.thehairydog.tmtrutil.item.TmItem
+import com.thehairydog.tmtrutil.util.ColourUtil
 import net.fabricmc.fabric.api.event.player.UseItemCallback
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.InteractionResultHolder
@@ -71,30 +72,63 @@ object ModEvents {
         val moveTemplate = Moves.getByName(moveName)
 
         if (moveTemplate == null) {
-            player.sendSystemMessage(Component.translatable("Move $moveName not found. Report this to an admin."))
+            player.sendSystemMessage(
+                Component.literal("[TM]: ")
+                    .withStyle { it.withColor(0xFFFFFF) }
+                    .append(Component.literal("Move $moveName not found. Report this to an admin.")
+                        .withStyle { it.withColor(0xAAAAAA) })
+            )
             return
         }
 
         // Check if Pokémon can learn the move via TM
         val learnSet: Learnset = pokemon.species.moves
         if (!learnSet.tmMoves.contains(moveTemplate)) {
-            player.sendSystemMessage(Component.translatable("${pokemon.species.name} can't learn ${moveTemplate.name} via TM!"))
+            player.sendSystemMessage(
+                Component.literal("[")
+                    .withStyle { it.withColor(0xFFFFFF) }
+                    .append(Component.literal("TM").withStyle { it.withColor(0xEE1515) }) // Pokémon red
+                    .append(Component.literal("]: ").withStyle { it.withColor(0xFFFFFF) })
+                    .append(Component.literal("${pokemon.species.name} can't learn ")
+                        .withStyle { it.withColor(0xAAAAAA) })
+                    .append(Component.literal(moveTemplate.name)
+                        .withStyle { it.withColor(ColourUtil.typeColors[moveTemplate.elementalType.name.lowercase()]?.value ?: 0xFFFFFF) })
+                    .append(Component.literal(" via TM!")
+                        .withStyle { it.withColor(0xAAAAAA) })
+            )
             return
         }
 
         // Teach the move
-        // Teach the move
         if (pokemon.learnMoveSafely(moveTemplate)) {
             player.sendSystemMessage(
-                Component.translatable("${pokemon.species.name} learned ${moveTemplate.name}!")
+                Component.literal("[")
+                    .withStyle { it.withColor(0xFFFFFF) }
+                    .append(Component.literal("TM").withStyle { it.withColor(0xEE1515) }) // Pokémon red
+                    .append(Component.literal("]: ").withStyle { it.withColor(0xFFFFFF) })
+                    .append(Component.literal("${pokemon.species.name} learned ")
+                        .withStyle { it.withColor(0xAAAAAA) })
+                    .append(Component.literal(moveTemplate.name)
+                        .withStyle { it.withColor(ColourUtil.typeColors[moveTemplate.elementalType.name.lowercase()]?.value ?: 0xFFFFFF) })
+                    .append(Component.literal("!")
+                        .withStyle { it.withColor(0xAAAAAA) })
             )
         } else {
             player.sendSystemMessage(
-                Component.translatable("${pokemon.species.name} already knows ${moveTemplate.name}!")
+                Component.literal("[")
+                    .withStyle { it.withColor(0xFFFFFF) }
+                    .append(Component.literal("TM").withStyle { it.withColor(0xEE1515) }) // Pokémon red
+                    .append(Component.literal("]: ").withStyle { it.withColor(0xFFFFFF) })
+                    .append(Component.literal("${pokemon.species.name} already knows ")
+                        .withStyle { it.withColor(0xAAAAAA) })
+                    .append(Component.literal(moveTemplate.name)
+                        .withStyle { it.withColor(ColourUtil.typeColors[moveTemplate.elementalType.name.lowercase()]?.value ?: 0xFFFFFF) })
+                    .append(Component.literal("!")
+                        .withStyle { it.withColor(0xAAAAAA) })
             )
         }
-
     }
+
 
     fun Pokemon.learnMoveSafely(template: MoveTemplate): Boolean {
         // Already knows this move?
